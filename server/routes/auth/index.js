@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User } = require("../../db/models");
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 router.post("/register", async (req, res, next) => {
   try {
