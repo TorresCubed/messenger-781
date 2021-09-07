@@ -43,8 +43,7 @@ const ChatContent = (props) => {
 
   const { conversation } = props;
   const { latestMessageText, otherUser, unreadMessages } = conversation;
-  const unreadCount = (unreadMessages) ? unreadMessages.length : [];
-  const previewTextStyle = (unreadCount > 0) ? "previewTextUnseen" : "previewTextSeen";
+  const previewTextStyle = (unreadMessages && unreadMessages.length > 0) ? "previewTextUnseen" : "previewTextSeen";
 
   return (
     <Box className={classes.root}>
@@ -57,9 +56,9 @@ const ChatContent = (props) => {
         </Typography>
       </Box>
       <Box>
-        {((unreadCount > 0) ? true : false)  && 
+        {((unreadMessages && unreadMessages.length > 0) ? true : false)  && 
           (<Typography className={classes.unreadNotifications}>
-            {unreadCount}
+            {unreadMessages.length}
           </Typography>)
         }
       </Box>

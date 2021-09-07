@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
 import moment from "moment";
@@ -8,21 +8,19 @@ import { markMessagesAsRead } from "../../store/utils/thunkCreators";
 const Messages = (props) => {
   const { markMessagesAsRead, messages, otherUser, userId, unreadMessages } = props;
 
-  useEffect(() => {
-    if(unreadMessages && unreadMessages.length > 0){
-      const newMessages = [];
-      unreadMessages.forEach(
-        (message) => {
-          if(message.senderId !== userId && message.read === false) {
-            const newMessage = {...message};
-            newMessage.read = true;
-            newMessages.push(newMessage);
-          }
+  if(unreadMessages && unreadMessages.length > 0){
+    const newMessages = [];
+    unreadMessages.forEach(
+      (message) => {
+        if(message.senderId !== userId && message.read === false) {
+          const newMessage = {...message};
+          newMessage.read = true;
+          newMessages.push(newMessage);
         }
-      )
-      markMessagesAsRead(newMessages);
-    }
-  }, [markMessagesAsRead, unreadMessages, userId]);
+      }
+    )
+    markMessagesAsRead(newMessages);
+  }
 
   return (
     <Box>
