@@ -8,23 +8,43 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     marginLeft: 20,
     flexGrow: 1,
+    flexDirection: "row",
   },
   username: {
     fontWeight: "bold",
     letterSpacing: -0.2,
   },
-  previewText: {
-    fontSize: 12,
+  previewTextSeen: {
+    fontSize: 14,
     color: "#9CADC8",
+    fontWeight: "500",
     letterSpacing: -0.17,
   },
+  previewTextUnseen: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#000000",
+    letterSpacing: -0.17,
+  },
+  unreadNotifications: {
+    fontSize: 10,
+    color: "#FFFFFF",
+    borderRadius: "50px",
+    border: "1px solid white",
+    padding: "3px",
+    "padding-left": "8px",
+    "padding-right": "8px",
+    backgroundColor: "#3f92ff",
+  }
 }));
 
 const ChatContent = (props) => {
   const classes = useStyles();
 
   const { conversation } = props;
-  const { latestMessageText, otherUser } = conversation;
+  const { latestMessageText, otherUser, unreadMessages } = conversation;
+  const unreadCount = (unreadMessages) ? unreadMessages.length : [];
+  const previewTextStyle = (unreadCount > 0) ? "previewTextUnseen" : "previewTextSeen";
 
   return (
     <Box className={classes.root}>
@@ -32,9 +52,16 @@ const ChatContent = (props) => {
         <Typography className={classes.username}>
           {otherUser.username}
         </Typography>
-        <Typography className={classes.previewText}>
+        <Typography className={classes[previewTextStyle]}>
           {latestMessageText}
         </Typography>
+      </Box>
+      <Box>
+        {((unreadCount > 0) ? true : false)  && 
+          (<Typography className={classes.unreadNotifications}>
+            {unreadCount}
+          </Typography>)
+        }
       </Box>
     </Box>
   );
