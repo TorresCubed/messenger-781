@@ -4,7 +4,8 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
-  updateMessagesInStore
+  clearUnreadFromStore,
+  adjustLastReadInStore
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -16,7 +17,8 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
-const UPDATE_MESSAGES = "UPDATE_MESSAGES";
+const CLEAR_UNREAD = "CLEAR_UNREAD";
+const ADJUST_LAST_READ = "ADJUST_LAST_READ"
 
 // ACTION CREATORS
 
@@ -27,17 +29,24 @@ export const gotConversations = (conversations) => {
   };
 };
 
-export const setNewMessage = (message, sender) => {
+export const adjustRead = (myId, conversationId) => {
   return {
-    type: SET_MESSAGE,
-    payload: { message, sender: sender || null },
+    type: ADJUST_LAST_READ,
+    payload: { myId, conversationId: conversationId},
   };
 };
 
-export const updateMessages = (message) => {
+export const setNewMessage = (message, sender, activeChat ) => {
   return {
-    type: UPDATE_MESSAGES,
-    message,
+    type: SET_MESSAGE,
+    payload: { message, sender: sender || null, activeChat: activeChat },
+  };
+};
+
+export const clearUnreadCount = (conversationId) => {
+  return {
+    type: CLEAR_UNREAD,
+    conversationId
   }
 }
 
@@ -83,7 +92,7 @@ const reducer = (state = [], action) => {
     case GET_CONVERSATIONS:
       return action.conversations;
     case SET_MESSAGE:
-      return addMessageToStore(state, action.payload);
+      return addMessageToStore(state, action.payload, action.activeChat);
     case ADD_ONLINE_USER: {
       return addOnlineUserToStore(state, action.id);
     }
@@ -100,8 +109,10 @@ const reducer = (state = [], action) => {
         action.payload.recipientId,
         action.payload.newMessage
       );
-    case UPDATE_MESSAGES:
-        return updateMessagesInStore(state, action.message);
+    case CLEAR_UNREAD:
+      return clearUnreadFromStore(state, action.conversationId);
+    case ADJUST_LAST_READ:
+      return adjustLastReadInStore(state, action.payload.myId, action.payload.conversationId);
     default:
       return state;
   }

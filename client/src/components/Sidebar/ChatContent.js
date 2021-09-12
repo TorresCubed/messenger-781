@@ -6,35 +6,34 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
-    marginLeft: 20,
+    marginLeft: theme.spacing(2.5),
     flexGrow: 1,
     flexDirection: "row",
   },
   username: {
-    fontWeight: "bold",
+    fontWeight: theme.typography.fontWeightBold,
     letterSpacing: -0.2,
   },
   previewTextSeen: {
-    fontSize: 14,
-    color: "#9CADC8",
-    fontWeight: "500",
+    fontSize: theme.typography.fontSize,
+    color: theme.palette.secondary.main,
+    fontWeight: theme.typography.fontWeightBold,
     letterSpacing: -0.17,
   },
   previewTextUnseen: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#000000",
+    fontSize: theme.typography.fontSize,
+    fontWeight: theme.typography.fontWeightBold,
     letterSpacing: -0.17,
   },
   unreadNotifications: {
-    fontSize: 10,
-    color: "#FFFFFF",
-    borderRadius: "50px",
-    border: "1px solid white",
-    padding: "3px",
-    "padding-left": "8px",
-    "padding-right": "8px",
-    backgroundColor: "#3f92ff",
+    fontSize: theme.typography.pxToRem(10),
+    color: theme.palette.primary.contrastText,
+    borderRadius: theme.spacing(6),
+    margin: theme.spacing(.5),
+    padding: theme.spacing(.4),
+    "padding-left": theme.spacing(),
+    "padding-right": theme.spacing(),
+    backgroundColor: theme.palette.primary.main,
   }
 }));
 
@@ -42,8 +41,8 @@ const ChatContent = (props) => {
   const classes = useStyles();
 
   const { conversation } = props;
-  const { latestMessageText, otherUser, unreadMessages } = conversation;
-  const previewTextStyle = (unreadMessages && unreadMessages.length > 0) ? "previewTextUnseen" : "previewTextSeen";
+  const { latestMessageText, otherUser, unreadCount } = conversation;
+  const previewTextStyle = (unreadCount && unreadCount > 0) ? "previewTextUnseen" : "previewTextSeen";
 
   return (
     <Box className={classes.root}>
@@ -56,9 +55,9 @@ const ChatContent = (props) => {
         </Typography>
       </Box>
       <Box>
-        {((unreadMessages && unreadMessages.length > 0) ? true : false)  && 
+        {unreadCount > 0  && 
           (<Typography className={classes.unreadNotifications}>
-            {unreadMessages.length}
+            {unreadCount}
           </Typography>)
         }
       </Box>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
 import moment from "moment";
@@ -6,29 +6,27 @@ import { connect } from "react-redux";
 import { markMessagesAsRead } from "../../store/utils/thunkCreators";
 
 const Messages = (props) => {
-  const { markMessagesAsRead, messages, otherUser, userId, unreadMessages } = props;
+  const { messages, otherUser, userId, conversationId, markMessagesAsRead } = props;
 
-  if(unreadMessages && unreadMessages.length > 0){
-    const newMessages = [];
-    unreadMessages.forEach(
-      (message) => {
-        if(message.senderId !== userId && message.read === false) {
-          const newMessage = {...message};
-          newMessage.read = true;
-          newMessages.push(newMessage);
-        }
-      }
-    )
-    markMessagesAsRead(newMessages);
-  }
-
+  
+  useEffect(() => {
+    if(messages[messages.length-1]?.senderId === otherUser.id){
+      markMessagesAsRead({
+        conversationId:conversationId,
+        otherUser:otherUser
+      });
+    }
+  }, [conversationId, markMessagesAsRead, otherUser, messages.length, messages, userId]);
+  
+    
+ 
   return (
     <Box>
       {messages.map((message) => {
         const time = moment(message.createdAt).format("h:mm");
 
         return message.senderId === userId ? (
-          <SenderBubble key={message.id} text={message.text} time={time} />
+          <SenderBubble key={message.id} text={message.text} time={time} identifyLastRead={(message.id === otherUser.lastReadMessageId) ? true : false} otherUser={otherUser} />
         ) : (
           <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
         );

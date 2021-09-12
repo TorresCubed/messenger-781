@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    borderRadius: 8,
-    height: 80,
+    borderRadius: theme.spacing(),
+    height: theme.spacing(10),
     boxShadow: "0 2px 10px 0 rgba(88,133,196,0.05)",
     marginBottom: 10,
     display: "flex",
@@ -24,12 +24,12 @@ const Chat = (props) => {
   const { conversation } = props;
   const { otherUser } = conversation;
 
-  const handleClick = async (conversation) => {
-    await props.setActiveChat(conversation.otherUser.username);
+  const handleClick = async () => {
+    await props.setActiveChat(otherUser.username);
   };
 
   return (
-    <Box onClick={() => handleClick(conversation)} className={classes.root}>
+    <Box onClick={() => handleClick()} className={classes.root}>
       <BadgeAvatar
         photoUrl={otherUser.photoUrl}
         username={otherUser.username}

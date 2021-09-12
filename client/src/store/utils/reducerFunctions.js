@@ -1,13 +1,15 @@
 export const addMessageToStore = (state, payload) => {
-  const { message, sender } = payload;
+  const { message, sender, activeChat } = payload;
   // if sender isn't null, that means the message needs to be put in a brand new convo
   if (sender !== null) {
     const newConvo = {
       id: message.conversationId,
       otherUser: sender,
       messages: [message],
+      latestMessageText: message.text,
+      unreadCount: (sender.username === activeChat) ? 0 : 1,
     };
-    newConvo.latestMessageText = message.text;
+    
     return [newConvo, ...state];
   }
 
@@ -16,7 +18,7 @@ export const addMessageToStore = (state, payload) => {
       const convoCopy = {...convo };
       convoCopy.messages.push(message);
       convoCopy.latestMessageText = message.text;
-      convoCopy.unreadMessages.push(message);
+      if(convo.otherUser.username !== activeChat && message.senderId === convo.otherUser.id) convoCopy.unreadCount = ++convo.unreadCount;
       return convoCopy;
     } else {
       return convo;
@@ -82,19 +84,29 @@ export const addNewConvoToStore = (state, recipientId, message) => {
   });
 };
 
-export const updateMessagesInStore = (state, messages) => {
+export const clearUnreadFromStore = (state, conversationId) => {
   return state.map((convo) => {
-    if(convo.id === messages[0].conversationId) {
+    if(convo.id === conversationId) {
       const convoCopy = { ...convo };
-      convoCopy.messages.forEach((existingMessage) => {
-        if(!existingMessage.read){
-          existingMessage = messages.find(message => message.id === existingMessage.id)
-        }
-      })
-      convoCopy.unreadMessages = [];
+      convoCopy.unreadCount = 0;
+      convoCopy.messages.forEach((message) => message.read = true);
       return convoCopy;
     } else {
       return convo;
     }
   });
 };
+
+export const adjustLastReadInStore = (state, myId, conversationId) => {
+  return state.map((convo) => {
+    if(convo.id === conversationId) {
+      const convoCopy = { ...convo };
+      convoCopy.messages.forEach((message) => message.read = true);
+      const myMessages =  convoCopy.messages.filter((message) => (message.senderId === myId.id));
+      convoCopy.otherUser.lastReadMessageId = myMessages[myMessages.length-1]?.id;
+      return convoCopy;
+    } else {
+    return convo;
+    }
+  })
+}

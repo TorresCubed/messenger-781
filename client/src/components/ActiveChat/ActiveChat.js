@@ -37,7 +37,7 @@ const ActiveChat = (props) => {
             <Messages
               messages={conversation.messages}
               otherUser={conversation.otherUser}
-              unreadMessages={conversation.unreadMessages}
+              conversationId={conversation.id}
               userId={user.id}
             />
             <Input
