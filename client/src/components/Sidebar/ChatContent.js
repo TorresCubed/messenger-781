@@ -14,14 +14,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightBold,
     letterSpacing: -0.2,
   },
-  previewTextSeen: {
+  previewText:  props => props.conversation.unreadCount && props.conversation.unreadCount > 0 
+    ? {
     fontSize: theme.typography.fontSize,
-    color: theme.palette.secondary.main,
     fontWeight: theme.typography.fontWeightBold,
     letterSpacing: -0.17,
-  },
-  previewTextUnseen: {
+  } : {
     fontSize: theme.typography.fontSize,
+    color: theme.palette.secondary.main,
     fontWeight: theme.typography.fontWeightBold,
     letterSpacing: -0.17,
   },
@@ -38,11 +38,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatContent = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   const { conversation } = props;
   const { latestMessageText, otherUser, unreadCount } = conversation;
-  const previewTextStyle = (unreadCount && unreadCount > 0) ? "previewTextUnseen" : "previewTextSeen";
 
   return (
     <Box className={classes.root}>
@@ -50,7 +49,7 @@ const ChatContent = (props) => {
         <Typography className={classes.username}>
           {otherUser.username}
         </Typography>
-        <Typography className={classes[previewTextStyle]}>
+        <Typography className={classes.previewText}>
           {latestMessageText}
         </Typography>
       </Box>

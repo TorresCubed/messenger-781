@@ -84,29 +84,19 @@ export const addNewConvoToStore = (state, recipientId, message) => {
   });
 };
 
-export const clearUnreadFromStore = (state, conversationId) => {
+export const clearUnreadFromStore = (state, conversationId, myId) => {
   return state.map((convo) => {
     if(convo.id === conversationId) {
       const convoCopy = { ...convo };
       convoCopy.unreadCount = 0;
       convoCopy.messages.forEach((message) => message.read = true);
+      if(myId){
+        const myMessages =  convoCopy.messages.filter((message) => (message.senderId === myId.id));
+        convoCopy.otherUser.lastReadMessageId = myMessages[myMessages.length-1]?.id;
+      }
       return convoCopy;
     } else {
       return convo;
     }
   });
 };
-
-export const adjustLastReadInStore = (state, myId, conversationId) => {
-  return state.map((convo) => {
-    if(convo.id === conversationId) {
-      const convoCopy = { ...convo };
-      convoCopy.messages.forEach((message) => message.read = true);
-      const myMessages =  convoCopy.messages.filter((message) => (message.senderId === myId.id));
-      convoCopy.otherUser.lastReadMessageId = myMessages[myMessages.length-1]?.id;
-      return convoCopy;
-    } else {
-    return convo;
-    }
-  })
-}

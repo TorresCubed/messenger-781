@@ -3,7 +3,7 @@ import store from "./store";
 import {
   removeOfflineUser,
   addOnlineUser,
-  adjustRead
+  clearUnread
 } from "./store/conversations";
 import { handleIncomingMessage } from "./store/index";
 
@@ -23,7 +23,7 @@ socket.on("connect", () => {
     store.dispatch(handleIncomingMessage(data.message, data.sender, data.recipientId));
   });
   socket.on("update-reads", (data) => {
-    store.dispatch(adjustRead(data.myId, data.conversationId));
+    store.dispatch(clearUnread(data.conversationId, data.myId));
   });
 });
 

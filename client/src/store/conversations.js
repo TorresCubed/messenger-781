@@ -5,7 +5,6 @@ import {
   removeOfflineUserFromStore,
   addMessageToStore,
   clearUnreadFromStore,
-  adjustLastReadInStore
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -18,7 +17,6 @@ const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
 const CLEAR_UNREAD = "CLEAR_UNREAD";
-const ADJUST_LAST_READ = "ADJUST_LAST_READ"
 
 // ACTION CREATORS
 
@@ -29,13 +27,6 @@ export const gotConversations = (conversations) => {
   };
 };
 
-export const adjustRead = (myId, conversationId) => {
-  return {
-    type: ADJUST_LAST_READ,
-    payload: { myId, conversationId: conversationId},
-  };
-};
-
 export const setNewMessage = (message, sender, activeChat ) => {
   return {
     type: SET_MESSAGE,
@@ -43,10 +34,10 @@ export const setNewMessage = (message, sender, activeChat ) => {
   };
 };
 
-export const clearUnreadCount = (conversationId) => {
+export const clearUnread = (conversationId, myId) => {
   return {
     type: CLEAR_UNREAD,
-    conversationId
+    payload: { myId, conversationId: conversationId},
   }
 }
 
@@ -110,9 +101,7 @@ const reducer = (state = [], action) => {
         action.payload.newMessage
       );
     case CLEAR_UNREAD:
-      return clearUnreadFromStore(state, action.conversationId);
-    case ADJUST_LAST_READ:
-      return adjustLastReadInStore(state, action.payload.myId, action.payload.conversationId);
+      return clearUnreadFromStore(state, action.payload.conversationId, action.payload.myId);
     default:
       return state;
   }

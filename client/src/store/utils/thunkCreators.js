@@ -5,7 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
-  clearUnreadCount,
+  clearUnread,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -95,7 +95,7 @@ const sendMessage = (data, body) => {
 export const markMessagesAsRead = (body) => async(dispatch) => {
   try {
       await axios.put(`/api/messages/${body.conversationId}`, body);
-      dispatch(clearUnreadCount(body.conversationId));
+      dispatch(clearUnread(body.conversationId, null));
       socket.emit("update-reads", body)
   } catch (error) {
     console.error(error);
