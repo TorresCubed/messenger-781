@@ -10,9 +10,8 @@ import {
   TextField,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
-import LoginImage from "./Images/LoginImage.png";
-import bubble from "./Images/bubble.svg";
 import useStyles from "./LoginStyles";
+import SideImage from "./SideImage";
 
 
 const Login = (props) => {
@@ -49,18 +48,7 @@ const Login = (props) => {
     <Grid 
       container 
       className={classes.pageContainer}>
-      <Grid className={classes.graphicWrapper}>
-        <Box className={classes.overlay}>
-          <img src={LoginImage} alt="Background"  className={classes.graphic}/>
-            <Box className={classes.cover} />
-            <img className={classes.bubble} src={bubble} alt="bubble"/> 
-            <Typography className={classes.bubbleText}>
-              Converse with anyone 
-              <br/> 
-              with any language
-            </Typography> 
-        </Box>
-      </Grid>
+      <SideImage windowSize= {windowSize}/>
       <Grid className={classes.contentWrapper}>
           <Box container item className={classes.pageChangeWrapper}>
             <Typography className={classes.statementText} >Dont have an account?</Typography>
@@ -74,6 +62,7 @@ const Login = (props) => {
                 <Grid>
                   <FormControl className={classes.entries} margin="normal" required>
                     <TextField
+                      inputProps={{style:{fontSize: 14}}}
                       aria-label="username"
                       label="Username"
                       name="username"
@@ -81,18 +70,19 @@ const Login = (props) => {
                     />
                   </FormControl>
                 </Grid>
-                <FormControl margin="normal" required>
+                <FormControl className={classes.entries} margin="normal" required>
                   <TextField
+                    inputProps={{style:{fontSize: 14}}}
                     label="password"
                     aria-label="password"
                     type="password"
                     name="password"
                   />
                 </FormControl>
-                <Grid>
-                  <Button className={classes.submit} type="submit" variant="contained" >
-                    Login
-                  </Button>
+                <Grid className={classes.submitWrapper}>
+                    <Button className={classes.submit} type="submit" variant="contained" >
+                      Login
+                    </Button>
                 </Grid>
               </Grid>
             </form>

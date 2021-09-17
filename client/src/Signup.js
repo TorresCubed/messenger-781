@@ -12,8 +12,7 @@ import {
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
 import useStyles from "./LoginStyles";
-import LoginImage from "./Images/LoginImage.png";
-import bubble from "./Images/bubble.svg";
+import SideImage from "./SideImage";
 
 const Login = (props) => {
   const [windowSize, setWindowSize] = useState();
@@ -58,21 +57,10 @@ const Login = (props) => {
     <Grid 
       container 
       className={classes.pageContainer}>
-      <Grid className={classes.graphicWrapper}>
-        <Box className={classes.overlay}>
-          <img src={LoginImage} alt="Background"  className={classes.graphic}/>
-            <Box className={classes.cover} />
-            <img className={classes.bubble} src={bubble} alt="bubble"/> 
-            <Typography className={classes.bubbleText}>
-              Converse with anyone 
-              <br/> 
-              with any language
-            </Typography> 
-        </Box>
-      </Grid>
+      <SideImage windowSize= {windowSize}/>
       <Grid className={classes.contentWrapper}>
           <Box container item className={classes.pageChangeWrapper}>
-            <Typography className={classes.statementText} >Need to log in?</Typography>
+            <Typography className={classes.statementText} >Already have an account?</Typography>
             <Button className={classes.pageChange} onClick={() => history.push("/login")}>Login</Button>
           </Box>
           <Box container item className={classes.formWrapper}>
@@ -82,6 +70,7 @@ const Login = (props) => {
                 <Grid>
                   <FormControl className={classes.entries} margin="normal" required>
                     <TextField
+                      inputProps={{style:{fontSize: 14}}}
                       aria-label="username"
                       label="Username"
                       name="username"
@@ -91,8 +80,9 @@ const Login = (props) => {
                   </FormControl>
                 </Grid>
                 <Grid>
-                  <FormControl>
+                  <FormControl className={classes.entries}>
                     <TextField
+                      inputProps={{style:{fontSize: 14}}}
                       label="E-mail address"
                       aria-label="e-mail address"
                       type="email"
@@ -102,12 +92,12 @@ const Login = (props) => {
                   </FormControl>
                 </Grid>
                 <Grid>
-                  <FormControl  margin="normal" required error={!!formErrorMessage.confirmPassword}>
+                  <FormControl className={classes.entries} margin="normal" required error={!!formErrorMessage.confirmPassword}>
                     <TextField
                       aria-label="password"
                       label="Password"
                       type="password"
-                      inputProps={{ minLength: 6 }}
+                      inputProps={{ minLength: 6, style:{fontSize: 14 }}}
                       name="password"
                       required
                     />
@@ -117,12 +107,12 @@ const Login = (props) => {
                   </FormControl>
                 </Grid>
                 <Grid>
-                  <FormControl margin="normal" required error={!!formErrorMessage.confirmPassword}>
+                  <FormControl className={classes.entries} margin="normal" required error={!!formErrorMessage.confirmPassword}>
                     <TextField
                       label="Confirm Password"
                       aria-label="confirm password"
                       type="password"
-                      inputProps={{ minLength: 6 }}
+                      inputProps={{ minLength: 6, style:{fontSize: 14 }}}
                       name="confirmPassword"
                       required
                     />
@@ -130,7 +120,7 @@ const Login = (props) => {
                       {formErrorMessage.confirmPassword}
                     </FormHelperText>
                   </FormControl>
-                <Grid>
+                <Grid className={classes.submitWrapper}>
                   <Button className={classes.submit} type="submit" variant="contained" >
                     Create
                   </Button>

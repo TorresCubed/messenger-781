@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles((theme) => ({
   pageContainer:  windowSize => windowSize ? {
     width: "100%",
+    height: "100vh"
   } : {
     height: "100vh",
   },
@@ -13,72 +14,88 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end"
   },
   pageChange: {
-    fontFamily: "'Montserrat', sans-serif",
-    backgroundColor: theme.palette.primary.contrastText,
-    boxShadow: "0px 0px 10px #DCDCDC",
     color: theme.palette.primary.main,
+    fontWeight: 600,
+    backgroundColor: theme.palette.primary.contrastText,
+    filter: "drop-shadow(0px 2px 6px rgba(74,106,149,.2))",
     fontSize: theme.typography.fontSize,
     paddingLeft: theme.spacing(4.5),
     paddingRight: theme.spacing(4.5),
     padding: theme.spacing(2),
-    borderRadius: theme.spacing(.5),
+    borderRadius: "5px",
   },
   statementText: {
     fontSize: theme.typography.fontSize,
     color: theme.palette.secondary.main,
-    textAlign:"right",
+    textAlign:"center",
     padding: theme.spacing(2),
   },
   formWrapper:  windowSize => windowSize ? {
-    position:"absolute",
-    width: "300px",
-    top: "55vmin",
-    left: "60%",
-    transform: "translate( -50%,-50%)",
+    marginTop: "30px",
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignSelf: "flex-end"
   } : {
     position:"absolute",
-    top: "40vmin",
-    left: "75%",
+    top: "45vh",
+    left: "70%",
     transform: "translate( -50%,-50%)",
   }, 
   submit: {
     fontFamily: "'Montserrat', sans-serif",
+    alignSelf: "center",
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
-    fontSize:  theme.typography.fontSize,
+    fontWeight: "bold",
+    fontSize:  theme.typography.pxToRem(16),
     paddingLeft: theme.spacing(6.5),
     paddingRight: theme.spacing(6.5),
     padding: theme.spacing(1.8),
-    borderRadius: theme.spacing(.5), 
+    borderRadius: "3px", 
+  },
+  submitWrapper: {
+    display: "flex",
+    width: "80vw",
+    maxWidth: "380px",
+    justifyContent: "center",
+    marginTop: "30px"
   },
   largeText: {
-    fontSize:  theme.typography.pxToRem(24),
-    fontWeight: theme.typography.fontWeightBold,
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: 600,
+    lineHeight: "40px",
+    fontSize:  theme.typography.pxToRem(26),
   },
   entries: {
-    fontsize:  theme.typography.pxToRem(18),
+    width: "80vw",
+    maxWidth: "380px",
+    fontsize:  theme.typography.fontSize,
     "& label.Mui-focused": {
       color: theme.palette.secondary.main,
     },
   },
   contentWrapper:  windowSize => windowSize ? {
     position: "relative",
-    top: "-55vh",
+    top: "-30vh",
     background: "white",
     width: "100%",
-    height: "80vmax"
   } : {
     height: "100vh",
-    width: "50%"
+    width: "60%"
   },
   graphicWrapper: windowSize => windowSize ? {
     width: "100%",
   } : {
     height: "100vh",
-    width: "50%",
+    width: "40%",
     overflow: "hidden",
   },
-  overlay: {
+  overlay:  windowSize => windowSize ? {
+    height: "100%",
+    backgroundImage: "linear-gradient(to bottom,rgb(58, 141, 255,.854), rgb(134, 185, 255,.85))"
+  } : {
     height: "100vh",
     backgroundImage: "linear-gradient(to bottom,rgb(58, 141, 255,.854), rgb(134, 185, 255,.85))"
   },
@@ -96,36 +113,35 @@ export const useStyles = makeStyles((theme) => ({
     width:"100%",
     zIndex: -2
   },
-  bubble: windowSize => windowSize ? {
+  logoWrapper: windowSize => windowSize ? {
     position:"absolute",
-    top: "30vmin",
+    top: "25vh",
     left: "50%",
     transform: "translate(-50%,-50%)",
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "column",
   } : {
     position:"absolute",
-    top: "35vmin",
-    left: "25%",
+    top: "40vh",
+    left: "20%",
     transform: "translate(-50%,-50%)",
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "column",
   },
-  bubbleText: windowSize => windowSize ? {
-    fontWeight:theme.typography.fontWeightBold,
-    fontSize: theme.typography.pxToRem(30),
-    position:"absolute",
+  bubble: {
+    alignSelf: "center",
+    width: "67px",
+    height: "66px",
+    marginBottom: "30px",
+  },
+  bubbleText: {
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.pxToRem(26),
+    lineHeight: "40px",
     width: "400px",
-    top: "50vmin",
     textAlign: "center",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
-    color:  theme.palette.primary.contrastText,
-  } : {
-    fontWeight: theme.typography.fontWeightBold,
-    fontSize: theme.typography.pxToRem(30),
-    textAlign: "center",
-    position:"absolute",
-    width: "400px",
-    top: "45vmin",
-    left: "25%",
-    transform: "translate(-50%,-50%)",
     color:  theme.palette.primary.contrastText,
   },
 }));
