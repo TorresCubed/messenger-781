@@ -4,6 +4,7 @@ A one-to-one realtime chat app.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
 
+## Purpose
 This project was provided as an assessment tool, allowing me to debug, add features, and suggest ways of modifying the backend. This was completed with code review, and slack discussions as a way of grading my capabilities for working in a real environment. 
 
 ## Initial Setup
