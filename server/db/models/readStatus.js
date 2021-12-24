@@ -1,19 +1,20 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Message = db.define("message", {
-  text: {
+const ReadStatus = db.define("readStatus", {
+  messageId: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  senderId: {
+  userId: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  conversationId: {
-    type: Sequelize.INTEGER,
+  read: {
+    type: Sequelize.BOOLEAN,
     allowNull: false,
+    default: false,
   }
 });
 
-module.exports = Message;
+module.exports = ReadStatus;
